@@ -3,7 +3,7 @@
     path: '{{ zocsinventoryserver }}'
     regexp: '{{ item.regexp }}'
     line: '{{ item.line }}'
-  #no_log: yes
+  no_log: yes
   with_items:
     - { regexp: '(\W|^)PerlSetEnv OCS_DB_HOST(\W|$)', line: 'PerlSetEnv OCS_DB_HOST localhost' }
     - { regexp: '(\W|^)PerlSetEnv OCS_DB_PORT(\W|$)', line: 'PerlSetEnv OCS_DB_PORT 3306' }
@@ -17,6 +17,7 @@
     path: '{{ zzocsinventoryrestapi }}'
     regexp: '{{ item.regexp }}'
     line: '{{ item.line }}'
+  no_log: yes
   with_items:
     - { regexp: '^\s*.ENV.OCS.DB.LOCAL.*$', line: "  $ENV{OCS_DB_LOCAL} = '{{ ocs_database }}' ;" }
     - { regexp: '^\s*.ENV.OCS.DB.USER.*$', line: "  $ENV{OCS_DB_USER} = '{{ ocs_database_user }}' ;" }
@@ -35,6 +36,7 @@
     dest: '{{ dbconfig }}'
     regexp: '{{ item.regexp }}'
     line: '{{ item.line }}'
+  no_log: yes
   with_items:
     - { regexp: '^._SESSION..COMPTE.*$', line: '$_SESSION["COMPTE_BASE"]="{{ ocs_database }}";' }
   register: check
@@ -53,11 +55,11 @@
     dest: '{{ dbconfig }}'
     regexp: '{{ item.regexp }}'
     line: '{{ item.line }}'
+  no_log: yes
   with_items:
     - { regexp: '^._SESSION..PSWD.*$', line: '$_SESSION["PSWD_BASE"]="{{ ocs_database_password }}";' }
   register: check
   when: check.found
-
 
 - name: chmod chown ocsdirectory
   file:
@@ -85,3 +87,4 @@
 - name: restorecon
   ansible.builtin.command: restorecon -irv /usr/share/ocsinventory-reports
  
+
