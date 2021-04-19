@@ -1,0 +1,11 @@
+ocs_database: ocsdb
+
+ocs_database_user: ocsadmin
+
+ocs_database_host: localhost
+
+ocs_database_password: ocsDBpassW0rd
+
+mysql_root_pass: 12345678
+
+ans_user: radek

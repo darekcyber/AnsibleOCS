@@ -1,0 +1,63 @@
+---
+- name: Ensure maria-db is installed
+  dnf:
+    name: '{{ packages }}'
+    state: latest
+
+- name: Ensure maria-db serivce is running
+  service:
+    name: mariadb
+    enabled: true
+    state: started
+
+- name: Set MySQL root Password
+  mysql_user:
+    check_implicit_admin: yes
+    login_user: root
+    login_password: '{{ mysql_root_pass }}'
+    user: root
+    password: '{{ mysql_root_pass }}'
+    host: localhost
+
+- name: delete remote root
+  mysql_user:
+    check_implicit_admin: yes
+    login_user: root
+    login_password: '{{ mysql_root_pass }}'
+    user: root
+    host: '{{ ansible_fqdn }}'
+    state: absent
+
+- name: remove anynomus MYSQL server user
+  mysql_user:
+    login_user: root
+    login_password: '{{ mysql_root_pass }}'
+    name: ''
+    host: '{{ ansible_fqdn }}'
+    state: absent
+
+- name: remove MYSQL test database
+  mysql_db:
+    login_user: root
+    login_password: '{{ mysql_root_pass }}'
+    name: test
+    state: absent
+
+- name: create '{{ ocs_database }}' database
+  mysql_db:
+    login_user: root
+    login_password: '{{ mysql_root_pass }}'
+    name: '{{ ocs_database }}'
+    collation: 'utf8_general_ci'
+    encoding: 'utf8'
+    state: present
+
+- name: create '{{ ocs_database_user }}' database user
+  mysql_user:
+    login_user: root
+    login_password: '{{ mysql_root_pass }}'
+    name: '{{ ocs_database_user }}'
+    password: '{{ ocs_database_password }}'
+    priv: '*.*:ALL'
+    state: present
+#    host: localhost

@@ -1,0 +1,11 @@
+- name: add gpg key
+  rpm_key:
+    key: 'https://rpms.remirepo.net/RPM-GPG-KEY-remi2018'
+    state: present
+
+- name: install additonal repositories
+  dnf:
+    name: '{{ repositories }}'
+    state: present
+    update_cache: True
+

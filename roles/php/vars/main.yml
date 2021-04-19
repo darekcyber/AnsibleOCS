@@ -1,0 +1,24 @@
+php_enablerepo: '7.4'
+
+packages:
+  - php 
+  - php-domxml
+  - php-gd
+  - php-imap
+  - php-ldap
+  - php-mbstring
+  - php-mysqlnd
+  - php-opcache
+  - php-pdo
+  - php-pear
+  - php-pecl-apcu
+  - php-pecl-zip
+  - php-soap
+  - php-xmlrpc
+  - php-xml
+  - php-zip
+  - php-fpm
+  - php-bcmath
+  - php-intl
+  - python3-libselinux
+  - policycoreutils-python-utils

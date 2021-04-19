@@ -1,0 +1,21 @@
+---
+- hosts: centos
+  become: yes
+  pre_tasks:
+  
+  - name: Update repository index (Centos)
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "CentOS"
+
+- hosts: all
+  become: yes
+  roles:
+    - add_repositories
+    - php
+    - httpd
+    - maria_db
+    - perl
+    - ocs

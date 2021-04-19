@@ -1,0 +1,6 @@
+- name: Download and unpack ocs
+  ansible.builtin.unarchive:
+    src: '{{  git_url}}'
+    dest: '{{ ocs_tar }}'
+    remote_src: yes
+

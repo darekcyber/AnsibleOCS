@@ -1,0 +1,4 @@
+- name: Ensure perl and build tools are installed
+  dnf:
+    name: '{{ packages }}'
+    state: present

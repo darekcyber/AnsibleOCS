@@ -1,0 +1,9 @@
+---
+- hosts: centos
+  become: yes
+
+- hosts: all
+  become: yes
+  roles:
+    - ocs_setup
+

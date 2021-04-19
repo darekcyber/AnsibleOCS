@@ -1,0 +1,30 @@
+- block:
+  
+  - name: Ensure dnf-plugins are installed CentOS8
+    yum:
+      name: dnf-plugins-core
+      state: present
+   
+  - name: Enable dnf modure for CentOS8
+    shell: |
+      dnf config-manager --set-enabled powertools
+      dnf module enable -y php:remi-{{ php_enablerepo }}
+    args:
+      warn: false
+    register: dnf_module_enable
+    changed_when: "'Nothing to do' not in dnf_module_enable.stdout "
+
+  - name: Ensure php and php packeges are installed
+    dnf:
+      name: '{{ packages }}'
+      state: present
+
+  - name: Enable php-fpm is running
+    service:
+      name: php-fpm
+      state: restarted
+      enabled: yes
+
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version | int >= 8 

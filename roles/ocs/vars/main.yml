@@ -1,0 +1,10 @@
+git_url: 'https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/2.8.1/OCSNG_UNIX_SERVER_2.8.1.tar.gz'
+
+ocs_tar: '/home/{{ ans_user }}'
+
+z-ocsinventory-server: '/etc/httpd/conf.d/z-ocsinventory-server.conf'
+zz-ocsinventory-restapi: '/etc/httpd/conf.d/zz-ocsinventory-restapi.conf'
+#z1:
+#  - { regexp: '^PerlSetEnv OCS_DB_NAME', line: 'PerlSetEnv OCS_DB_NAME ocsdb' }
+
+

@@ -1,0 +1,7 @@
+packages:
+  - httpd
+
+firewall_services:
+  - http
+  - https
+

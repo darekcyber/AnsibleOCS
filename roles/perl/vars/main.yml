@@ -1,0 +1,17 @@
+packages:
+  - make
+  - gcc
+  - perl-Archive-Zip
+  - perl-Compress-Zlib
+  - perl-DBD-MySQL
+  - perl-DBI
+  - perl-Mojolicious
+  - perl-Net-IP
+  - perl-Plack
+  - perl-SOAP-Lite
+  - perl-Switch
+  - perl-XML-Entities
+  - perl-XML-Simple
+  - perl-Apache-DBI
+  - perl-Digest-SHA1
+  - perl-Apache2-SOAP
