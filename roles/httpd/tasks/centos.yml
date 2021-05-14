@@ -1,0 +1,24 @@
+- name: Ensure httpd is installed
+  dnf:
+    name: '{{ packages_centos }}'
+    state: present
+
+- name: Ensure services http are add to firewall
+  ansible.posix.firewalld:
+    service: http
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Ensure service https is add to firewall
+  ansible.posix.firewalld:
+    service: https
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Ensure httpd is running
+  service:
+    name: httpd
+    enabled: yes
+    state: started

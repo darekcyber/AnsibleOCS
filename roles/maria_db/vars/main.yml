@@ -1,9 +1,12 @@
 ---
-packages:
+packages_centos:
   - mariadb
   - mariadb-server
   - python3-PyMySQL
 
+packages_ubuntu:
+  - mariadb-server
+  - python3-pymysql
 
 
 

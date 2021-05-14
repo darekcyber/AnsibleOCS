@@ -16,7 +16,7 @@
 
   - name: Ensure php and php packeges are installed
     dnf:
-      name: '{{ packages }}'
+      name: '{{ packages_centos }}'
       state: present
 
   - name: Enable php-fpm is running
@@ -28,3 +28,18 @@
   when:
     - ansible_os_family == 'RedHat'
     - ansible_distribution_major_version | int >= 8 
+
+- block:
+
+  - name: Install packages php Ubuntu
+    apt:
+      name: "{{ packages_ubuntu }}"
+      state: present
+
+  - name: Ensure php service is running
+    service:
+      name: "php{{ php_version_ubuntu }}-fpm"
+      state: restarted
+
+  when:
+  - ansible_distribution == "Ubuntu"

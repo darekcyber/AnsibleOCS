@@ -1,7 +1,13 @@
-packages:
+packages_centos:
   - httpd
 
 firewall_services:
   - http
   - https
 
+packages_ubuntu:
+  - apache2
+  - libapache2-mod-perl2
+  - libapache-dbi-perl
+  - libapache-db-perl
+  - libapache2-mod-php

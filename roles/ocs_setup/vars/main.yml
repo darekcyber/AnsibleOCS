@@ -1,5 +1,0 @@
-zocsinventoryserver: '/etc/httpd/conf.d/z-ocsinventory-server.conf'
-
-zzocsinventoryrestapi: '/etc/httpd/conf.d/zz-ocsinventory-restapi.conf'
-
-dbconfig: '/usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php'

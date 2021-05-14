@@ -1,0 +1,9 @@
+- name: Ensure apache packages are installed
+  apt:
+    name: "{{ packages_ubuntu }}"
+    state: present
+
+- name: Ensure apache service is running
+  service:
+    name: apache2
+    state: restarted

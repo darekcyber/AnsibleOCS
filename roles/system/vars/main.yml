@@ -1,0 +1,9 @@
+packages:
+  - make
+  - cmake
+  - gcc
+  - make
+  - git
+  - curl
+  - unzip
+  - composer

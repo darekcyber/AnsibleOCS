@@ -1,0 +1,8 @@
+apache_path_available: '/etc/apache2/conf-available/'
+apache_path_enabled: '/etc/apache2/conf-enabled/'
+
+zocsinventoryserver: '{{ apache_path_available }}z-ocsinventory-server.conf'
+
+zzocsinventoryrestapi: '{{ apache_path_available }}zz-ocsinventory-restapi.conf'
+
+dbconfig: '/usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php'

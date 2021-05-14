@@ -1,4 +1,4 @@
-packages:
+packages_centos:
   - make
   - gcc
   - perl-Archive-Zip
@@ -17,3 +17,26 @@ packages:
   - perl-Apache2-SOAP
   - wget
   - tar
+
+packages_ubuntu:
+  - perl
+  - libxml-simple-perl
+  - libcompress-zlib-perl
+  - libdbi-perl
+  - libdbd-mysql-perl
+  - libnet-ip-perl
+  - libsoap-lite-perl
+  - libio-compress-perl
+  - libapache-dbi-perl
+  - libapache2-mod-perl2
+  - libapache2-mod-perl2-dev
+  - cpanminus
+
+#perl_modules:
+  #- "Apache2::SOAP"
+  #- XML::Entities
+  #- Net::IP
+  #- Apache::DBI
+  #- Mojolicious
+  #- Switch
+  # Plack::Handler

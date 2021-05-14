@@ -1,0 +1,7 @@
+apache_path: '/etc/httpd/conf.d/'
+
+zocsinventoryserver: '{{ apache_path }}z-ocsinventory-server.conf'
+
+zzocsinventoryrestapi: '{{ apache_path }}zz-ocsinventory-restapi.conf'
+
+dbconfig: '/usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php'

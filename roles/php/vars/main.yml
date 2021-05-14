@@ -1,6 +1,6 @@
 php_enablerepo: '7.4'
 
-packages:
+packages_centos:
   - php 
   - php-domxml
   - php-gd
@@ -22,3 +22,18 @@ packages:
   - php-intl
   - python3-libselinux
   - policycoreutils-python-utils
+
+packages_ubuntu:
+  - "php{{ php_version_ubuntu }}"
+  - php-cli
+  - php-fpm
+  - php-json
+  - php-common
+  - php-mysql
+  - php-zip
+  - php-gd
+  - php-mbstring
+  - php-curl
+  - php-xml
+  - php-pear
+  - php-bcmath

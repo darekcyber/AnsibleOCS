@@ -1,0 +1,92 @@
+
+
+- name: change z-ocsinventory-server 
+  lineinfile:
+    path: '{{ zocsinventoryserver }}'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  no_log: yes
+  with_items:
+    - { regexp: '(\W|^)PerlSetEnv OCS_DB_HOST(\W|$)', line: 'PerlSetEnv OCS_DB_HOST localhost' }
+    - { regexp: '(\W|^)PerlSetEnv OCS_DB_PORT(\W|$)', line: 'PerlSetEnv OCS_DB_PORT 3306' }
+    - { regexp: '(\W|^)PerlSetEnv OCS_DB_NAME(\W|$)', line: 'PerlSetEnv OCS_DB_NAME {{ ocs_database }}' }
+    - { regexp: '(\W|^)PerlSetEnv OCS_DB_LOCAL(\W|$)', line: 'PerlSetEnv OCS_DB_LOCAL {{ ocs_database }}' }
+    - { regexp: '(\W|^)PerlSetEnv OCS_DB_USER(\W|$)', line: 'PerlSetEnv OCS_DB_USER {{ ocs_database_user }}' }
+    - { regexp: '(\W|^)PerlSetVar OCS_DB_PWD(\W|$)', line: 'PerlSetVar OCS_DB_PWD {{ ocs_database_password }}' }
+
+- name: change zz-ocsinventory-server
+  lineinfile:
+    path: '{{ zzocsinventoryrestapi }}'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  no_log: yes
+  with_items:
+    - { regexp: '^\s*.ENV.OCS.DB.LOCAL.*$', line: "  $ENV{OCS_DB_LOCAL} = '{{ ocs_database }}' ;" }
+    - { regexp: '^\s*.ENV.OCS.DB.USER.*$', line: "  $ENV{OCS_DB_USER} = '{{ ocs_database_user }}' ;" }
+    - { regexp: '^\s*.ENV.OCS.DB.PWD.*$', line: "  $ENV{OCS_DB_PWD}= '{{ ocs_database_password }}' ;" }
+
+- name: check if dbconfig.inc.php was check previosly
+  lineinfile:
+    state: absent
+    path: '{{ dbconfig }}'
+    regexp: "^._SESSION..COMPTE.*$"
+  check_mode: true
+  register: check
+
+- name: change dbconfig.inc.php
+  lineinfile:
+    dest: '{{ dbconfig }}'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  no_log: yes
+  with_items:
+    - { regexp: '^._SESSION..COMPTE.*$', line: '$_SESSION["COMPTE_BASE"]="{{ ocs_database }}";' }
+  register: check
+  when: check.found
+
+- name: check if dbconfig.inc.php was check previosly
+  lineinfile:
+    state: absent
+    path: '{{ dbconfig }}'
+    regexp: "^._SESSION..PSWD.*$"
+  check_mode: true
+  register: check
+
+- name: change dbconfig.inc.php
+  lineinfile:
+    dest: '{{ dbconfig }}'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  no_log: yes
+  with_items:
+    - { regexp: '^._SESSION..PSWD.*$', line: '$_SESSION["PSWD_BASE"]="{{ ocs_database_password }}";' }
+  register: check
+  when: check.found
+
+- name: chmod chown ocsdirectory
+  file:
+    path: '/usr/share/ocsinventory-reports'
+    state: directory
+    recurse: yes
+    owner: apache
+    group: apache
+    mode: '0766'
+
+- name: chmod chown ocsdirectory
+  file:
+    path: '/var/lib/ocsinventory-reports'
+    state: directory
+    recurse: yes
+    owner: apache
+    group: apache
+
+- name: sefcontext
+  community.general.sefcontext:
+    target: '/usr/share/ocsinventory-reports(/.*)?'
+    setype: httpd_sys_rw_content_t
+    state: present
+
+- name: restorecon
+  ansible.builtin.command: restorecon -irv /usr/share/ocsinventory-reports
+ 
+

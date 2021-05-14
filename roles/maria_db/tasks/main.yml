@@ -1,8 +1,15 @@
 ---
-- name: Ensure maria-db is installed
+- name: Ensure maria-db is installed Centos
   dnf:
-    name: '{{ packages }}'
+    name: '{{ packages_centos }}'
     state: latest
+  when: ansible_distribution == "Centos"
+
+- name: Ensure maria-db is installed Ubuntu
+  apt:
+    name: '{{ packages_ubuntu }}'
+    state: latest
+  when: ansible_distribution == "Ubuntu"
 
 - name: Ensure maria-db serivce is running
   service:
@@ -18,7 +25,8 @@
     user: root
     password: '{{ mysql_root_pass }}'
     host: localhost
-
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+ 
 - name: delete remote root
   mysql_user:
     check_implicit_admin: yes
@@ -60,4 +68,4 @@
     password: '{{ ocs_database_password }}'
     priv: '*.*:ALL'
     state: present
-#    host: localhost
+ #  host: localhost

@@ -8,4 +8,8 @@ ocs_database_password: ocsDBpassW0rd
 
 mysql_root_pass: 12345678
 
-ans_user: radek
+ans_user: vagrant
+
+php_version_ubuntu: 7.4
+
+

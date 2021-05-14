@@ -1,4 +1,26 @@
-- name: Ensure perl and build tools are installed
+- name: Ensure perl and build tools are installed Centos
   dnf:
-    name: '{{ packages }}'
+    name: '{{ packages_centos }}'
     state: present
+  when: ansible_distribution == "Centos"
+
+- name: Ensuer perl packages are installed Ubuntu
+  apt:
+    name: '{{ packages_ubuntu }}'
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install perl modules
+  cpanm:
+    name: "{{ item }}"
+#    name: '{{ perl_modules }}'
+  with_items:
+    - Apache2::SOAP
+    - XML::Entities
+    - Net::IP
+    - Apache::DBI
+    - Mojolicious
+    - Switch
+    - Plack::Handler
+    - Archive::Zip
+  become: yes
